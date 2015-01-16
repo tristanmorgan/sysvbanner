@@ -145,9 +145,7 @@ func main() {
 			var index_b int
 
 			for index_b = 0; index_b < bs_len; index_b++ {
-				ch := bs[index_b]
-
-				ind := int(ch - ' ')
+				ind := int(bs[index_b] - ' ')
 
 				if ind < 0 {
 					ind = 0

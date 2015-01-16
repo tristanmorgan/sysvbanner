@@ -30,6 +30,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 var glyphs = []string{
@@ -130,45 +131,54 @@ var glyphs = []string{
 	" #    #    #   ######  ###     #     ###         # # # #",
 }
 
-func main() {
+func printLine(bs []byte, bs_len int, index_a int) {
 	line := make([]byte, 80)
+	var index_b int
 
+	for index_b = 0; index_b < bs_len; index_b++ {
+		ind := int(bs[index_b] - ' ')
+
+		if ind < 0 {
+			ind = 0
+		}
+
+		for index_c := 0; index_c < 7; index_c++ {
+			line[index_b*8+index_c] = glyphs[(ind/8*7)+index_a][(ind%8*7)+index_c]
+		}
+
+		line[index_b*8+7] = ' '
+	}
+
+	for index_b = bs_len*8 - 1; index_b >= 0; index_b-- {
+		if line[index_b] != ' ' {
+			break
+		}
+
+		line[index_b] = ' '
+	}
+
+	str := string(line)
+	str = strings.TrimRight(str, "\x00")
+	fmt.Print(str)
+}
+
+func main() {
 	for _, str := range os.Args[1:] {
 		bs := []byte(str)
-		bs_len := len(bs)
-
-		if bs_len > 10 {
-			bs_len = 10
-		}
+		bs_len0 := len(bs)
 
 		for index_a := 0; index_a < 7; index_a++ {
-			var index_b int
+			for offset := 0; offset < bs_len0; offset += 10 {
+				bs_len := bs_len0 - offset
 
-			for index_b = 0; index_b < bs_len; index_b++ {
-				ind := int(bs[index_b] - ' ')
-
-				if ind < 0 {
-					ind = 0
+				if bs_len > 10 {
+					bs_len = 10
 				}
 
-				for index_c := 0; index_c < 7; index_c++ {
-					line[index_b*8+index_c] = glyphs[(ind/8*7)+index_a][(ind%8*7)+index_c]
-				}
-
-				line[index_b*8+7] = ' '
+				printLine(bs[offset:], bs_len, index_a)
 			}
 
-			for index_b = bs_len*8 - 1; index_b >= 0; index_b-- {
-				if line[index_b] != ' ' {
-					break
-				}
-
-				line[index_b] = 0
-			}
-
-			fmt.Println(string(line))
+			fmt.Println()
 		}
-
-		fmt.Println()
 	}
 }

@@ -2,9 +2,9 @@ require 'formula'
 
 class SysvbannerGo < Formula
   homepage 'https://github.com/winebarrel/sysvbanner-go'
-  url 'https://github.com/winebarrel/sysvbanner-go/releases/download/0.1.0/sysvbanner-go-0.1.0-darwin-amd64.tar.gz'
+  url 'https://github.com/winebarrel/sysvbanner-go/releases/download/0.1.1/sysvbanner-go-0.1.1-darwin-amd64.tar.gz'
   sha1 '0c4ff71a441d115555b67e9076c01f006c8ad6f3'
-  version '0.1.0'
+  version '0.1.1'
   head 'https://github.com/winebarrel/sysvbanner-go.git', :branch => 'master'
 
   def install

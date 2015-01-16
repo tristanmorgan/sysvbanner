@@ -29,6 +29,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -163,6 +164,12 @@ func printLine(bs []byte, bs_len int, index_a int) {
 }
 
 func main() {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
 	for _, str := range os.Args[1:] {
 		bs := []byte(str)
 		bs_len0 := len(bs)
@@ -181,4 +188,5 @@ func main() {
 			fmt.Println()
 		}
 	}
+
 }

@@ -162,8 +162,8 @@ func printLine(bs []byte, bs_len int, index_a int, writer io.Writer) {
 	fmt.Fprint(writer, str)
 }
 
-func Banner(str *string, writer io.Writer) {
-	bs := []byte(*str)
+func Banner(str string, writer io.Writer) {
+	bs := []byte(str)
 	bs_len0 := len(bs)
 
 	for index_a := 0; index_a < 7; index_a++ {

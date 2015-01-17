@@ -41,6 +41,6 @@ func main() {
 	}()
 
 	for _, str := range os.Args[1:] {
-		banner.Banner(&str, os.Stdout)
+		banner.Banner(str, os.Stdout)
 	}
 }

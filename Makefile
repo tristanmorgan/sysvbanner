@@ -1,9 +1,9 @@
 PREFIX=/usr/local
 
-banner:	banner.go
-	go build banner.go
+banner:	main.go src/banner/banner.go
+	GOPATH=$(GOPATH):`pwd` go build -o banner main.go
 
-install:
+install: banner
 	install -m 755 banner $(PREFIX)/bin/
 
 clean:

@@ -25,12 +25,11 @@
  * 1. protoized and indented, 2. changed @ character to #
  */
 // ------------------------------------------------------------------
-package main
+package banner
 
 import (
 	"fmt"
-	"log"
-	"os"
+	"io"
 	"strings"
 )
 
@@ -132,7 +131,7 @@ var glyphs = []string{
 	" #    #    #   ######  ###     #     ###         # # # #",
 }
 
-func printLine(bs []byte, bs_len int, index_a int) {
+func printLine(bs []byte, bs_len int, index_a int, writer io.Writer) {
 	line := make([]byte, 80)
 	var index_b int
 
@@ -160,34 +159,26 @@ func printLine(bs []byte, bs_len int, index_a int) {
 
 	str := string(line)
 	str = strings.TrimRight(str, "\x00")
-	fmt.Print(str)
+	fmt.Fprint(writer, str)
 }
 
-func main() {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Fatal(err)
-		}
-	}()
+func Banner(str *string, writer io.Writer) {
+	bs := []byte(*str)
+	bs_len0 := len(bs)
 
-	for _, str := range os.Args[1:] {
-		bs := []byte(str)
-		bs_len0 := len(bs)
+	for index_a := 0; index_a < 7; index_a++ {
+		for offset := 0; offset < bs_len0; offset += 10 {
+			bs_len := bs_len0 - offset
 
-		for index_a := 0; index_a < 7; index_a++ {
-			for offset := 0; offset < bs_len0; offset += 10 {
-				bs_len := bs_len0 - offset
-
-				if bs_len > 10 {
-					bs_len = 10
-				}
-
-				printLine(bs[offset:], bs_len, index_a)
+			if bs_len > 10 {
+				bs_len = 10
 			}
 
-			fmt.Println()
+			printLine(bs[offset:], bs_len, index_a, writer)
 		}
 
-		fmt.Println()
+		fmt.Fprintln(writer)
 	}
+
+	fmt.Fprintln(writer)
 }

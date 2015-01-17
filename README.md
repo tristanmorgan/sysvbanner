@@ -12,7 +12,7 @@ make
 
 ## Installation
 
-``sh
+```sh
 make install
 ```
 

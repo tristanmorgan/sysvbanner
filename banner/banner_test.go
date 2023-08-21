@@ -1,8 +1,9 @@
 package banner_test
 
 import (
-	. "banner"
 	"testing"
+
+	"github.com/winebarrel/sysvbanner-go/banner"
 )
 
 type bufferWriter struct {
@@ -29,7 +30,7 @@ func TestBanner(t *testing.T) {
 	str := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 	writer := &bufferWriter{}
 
-	Banner(str, writer)
+	banner.Banner(str, writer)
 
 	for i, actual := range writer.buf {
 		if expected[i] != actual {

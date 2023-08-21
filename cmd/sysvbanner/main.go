@@ -28,7 +28,7 @@
 package main
 
 import (
-	"banner"
+	"github.com/winebarrel/sysvbanner-go/banner"
 	"log"
 	"os"
 )

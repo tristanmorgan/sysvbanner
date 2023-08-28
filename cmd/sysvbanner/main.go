@@ -28,9 +28,11 @@
 package main
 
 import (
+	"bufio"
 	"github.com/winebarrel/sysvbanner-go/banner"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -40,7 +42,18 @@ func main() {
 		}
 	}()
 
-	for _, str := range os.Args[1:] {
-		banner.Banner(str, os.Stdout)
+	if len(os.Args) > 1 {
+		for _, str := range os.Args[1:] {
+			banner.Banner(str, os.Stdout)
+		}
+	} else {
+		var line string
+		scanner := bufio.NewScanner(os.Stdin)
+		for scanner.Scan() {
+			line = scanner.Text()
+			for _, x := range strings.Fields(line) {
+				banner.Banner(x, os.Stdout)
+			}
+		}
 	}
 }

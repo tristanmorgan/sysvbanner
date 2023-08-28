@@ -3,7 +3,7 @@ package banner_test
 import (
 	"testing"
 
-	"github.com/winebarrel/sysvbanner-go/banner"
+	"github.com/tristanmorgan/sysvbanner/banner"
 )
 
 type bufferWriter struct {

@@ -29,7 +29,7 @@ package main
 
 import (
 	"bufio"
-	"github.com/winebarrel/sysvbanner-go/banner"
+	"github.com/tristanmorgan/sysvbanner/banner"
 	"log"
 	"os"
 	"strings"

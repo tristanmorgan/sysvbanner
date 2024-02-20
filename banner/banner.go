@@ -25,6 +25,8 @@
  * 1. protoized and indented, 2. changed @ character to #
  */
 // ------------------------------------------------------------------
+
+// Package banner helps you print a banner
 package banner
 
 import (
@@ -131,30 +133,30 @@ var glyphs = []string{
 	" #    #    #   ######  ###     #     ###         # # # #",
 }
 
-func printLine(bs []byte, bs_len int, index_a int, writer io.Writer) {
+func printLine(bs []byte, bsLen int, indexA int, writer io.Writer) {
 	line := make([]byte, 80)
-	var index_b int
+	var indexB int
 
-	for index_b = 0; index_b < bs_len; index_b++ {
-		ind := int(bs[index_b] - ' ')
+	for indexB = 0; indexB < bsLen; indexB++ {
+		ind := int(bs[indexB] - ' ')
 
 		if ind < 0 {
 			ind = 0
 		}
 
-		for index_c := 0; index_c < 7; index_c++ {
-			line[index_b*8+index_c] = glyphs[(ind/8*7)+index_a][(ind%8*7)+index_c]
+		for indexC := 0; indexC < 7; indexC++ {
+			line[indexB*8+indexC] = glyphs[(ind/8*7)+indexA][(ind%8*7)+indexC]
 		}
 
-		line[index_b*8+7] = ' '
+		line[indexB*8+7] = ' '
 	}
 
-	for index_b = bs_len*8 - 1; index_b >= 0; index_b-- {
-		if line[index_b] != ' ' {
+	for indexB = bsLen*8 - 1; indexB >= 0; indexB-- {
+		if line[indexB] != ' ' {
 			break
 		}
 
-		line[index_b] = ' '
+		line[indexB] = ' '
 	}
 
 	str := string(line)
@@ -162,19 +164,20 @@ func printLine(bs []byte, bs_len int, index_a int, writer io.Writer) {
 	fmt.Fprint(writer, str)
 }
 
+// Banner converts little-text to large outputted to a writer
 func Banner(str string, writer io.Writer) {
 	bs := []byte(str)
-	bs_len0 := len(bs)
+	bsLen0 := len(bs)
 
-	for index_a := 0; index_a < 7; index_a++ {
-		for offset := 0; offset < bs_len0; offset += 10 {
-			bs_len := bs_len0 - offset
+	for indexA := 0; indexA < 7; indexA++ {
+		for offset := 0; offset < bsLen0; offset += 10 {
+			bsLen := bsLen0 - offset
 
-			if bs_len > 10 {
-				bs_len = 10
+			if bsLen > 10 {
+				bsLen = 10
 			}
 
-			printLine(bs[offset:], bs_len, index_a, writer)
+			printLine(bs[offset:], bsLen, indexA, writer)
 		}
 
 		fmt.Fprintln(writer)

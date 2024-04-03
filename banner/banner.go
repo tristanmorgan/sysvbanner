@@ -133,12 +133,12 @@ var glyphs = [][]byte{
 	[]byte(" #    #    #   ######  ###     #     ###         # # # #"),
 }
 
-func printLine(bs []byte, bsLen int, indexA int, writer io.Writer) {
+func printLine(bs []byte, indexA int, writer io.Writer) {
 	line := make([]byte, 0)
-	var indexB int
 
-	for indexB = 0; indexB < bsLen; indexB++ {
-		ind := int(bs[indexB] - ' ')
+	for _, chr := range bs {
+
+		ind := int(chr - ' ')
 
 		if ind < 0 {
 			ind = 0
@@ -149,36 +149,17 @@ func printLine(bs []byte, bsLen int, indexA int, writer io.Writer) {
 		line = append(line, ' ')
 	}
 
-	for indexB = bsLen*8 - 1; indexB >= 0; indexB-- {
-		if line[indexB] != ' ' {
-			break
-		}
-
-		line[indexB] = ' '
-	}
-
 	str := string(line)
 	str = strings.TrimRight(str, "\x00")
-	fmt.Fprint(writer, str)
+	fmt.Fprintln(writer, str)
 }
 
 // Banner converts little-text to large outputted to a writer
 func Banner(str string, writer io.Writer) {
 	bs := []byte(str)
-	bsLen0 := len(bs)
 
 	for indexA := 0; indexA < 7; indexA++ {
-		for offset := 0; offset < bsLen0; offset += 10 {
-			bsLen := bsLen0 - offset
-
-			if bsLen > 10 {
-				bsLen = 10
-			}
-
-			printLine(bs[offset:], bsLen, indexA, writer)
-		}
-
-		fmt.Fprintln(writer)
+		printLine(bs, indexA, writer)
 	}
 
 	fmt.Fprintln(writer)

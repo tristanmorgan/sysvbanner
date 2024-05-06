@@ -167,6 +167,8 @@ func printLine(bs []byte, indexA int, writer io.Writer) {
 
 		if ind < 0 {
 			ind = 0
+		} else if ind > 95 {
+			ind = 95
 		}
 
 		line = append(line, glyphs[(ind / 8)][indexA][(ind%8*5):((ind%8*5)+5)]...)

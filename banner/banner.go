@@ -30,9 +30,7 @@
 package banner
 
 import (
-	"fmt"
 	"io"
-	"strings"
 )
 
 var glyphs = [][][]byte{
@@ -176,9 +174,8 @@ func printLine(bs []byte, indexA int, writer io.Writer) {
 		line = append(line, ' ')
 	}
 
-	str := string(line)
-	str = strings.TrimRight(str, "\x00")
-	fmt.Fprintln(writer, str)
+	writer.Write(line)
+	writer.Write([]byte("\n"))
 }
 
 // Banner converts little-text to large outputted to a writer
@@ -189,5 +186,5 @@ func Banner(str string, writer io.Writer) {
 		printLine(bs, indexA, writer)
 	}
 
-	fmt.Fprintln(writer)
+	writer.Write([]byte("\n"))
 }

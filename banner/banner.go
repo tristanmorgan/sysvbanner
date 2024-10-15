@@ -157,7 +157,7 @@ var glyphs = [][][]byte{
 }
 
 func printLine(bs []byte, indexA int, writer io.Writer) {
-	line := make([]byte, 0)
+	line := make([]byte, 0, (len(bs)*6 + 1))
 
 	for _, chr := range bs {
 

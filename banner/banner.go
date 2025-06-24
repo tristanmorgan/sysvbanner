@@ -182,7 +182,7 @@ func printLine(bs []byte, indexA int, writer io.Writer) {
 func Banner(str string, writer io.Writer) {
 	bs := []byte(str)
 
-	for indexA := 0; indexA < 8; indexA++ {
+	for indexA := range 8 {
 		printLine(bs, indexA, writer)
 	}
 

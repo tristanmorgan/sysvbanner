@@ -156,6 +156,16 @@ var glyphs = [][][]byte{
 	},
 }
 
+func trimRight(s []byte) []byte {
+	for len(s) > 0 {
+		if s[len(s)-1] != ' ' {
+			break
+		}
+		s = s[:len(s)-1]
+	}
+	return s
+}
+
 func printLine(bs []byte, indexA int, writer io.Writer) {
 	line := make([]byte, 0, (len(bs)*6 + 1))
 
@@ -174,7 +184,7 @@ func printLine(bs []byte, indexA int, writer io.Writer) {
 		line = append(line, ' ')
 	}
 
-	writer.Write(line)
+	writer.Write(trimRight(line))
 	writer.Write([]byte("\n"))
 }
 
